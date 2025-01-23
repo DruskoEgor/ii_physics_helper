@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('JavaScript подключен и работает!');  // Подтверждаем, что JS выполняется
+
             // Функция для раскрытия формулы
             function toggleFormula(formulaId) {
                 const formulaElement = document.getElementById(formulaId);
-                console.log(formulaId);  // Для отладки
+                console.log('Нажата кнопка для формулы с ID:', formulaId);  // Логируем ID
                 if (formulaElement) {
                     if (formulaElement.style.display === 'none' || formulaElement.style.display === '') {
                         formulaElement.style.display = 'block';
@@ -20,11 +22,11 @@
                 }
             }
 
-            // Привязываем события к кнопкам, чтобы они работали
+            // Привязываем события для всех кнопок
             const buttons = document.querySelectorAll('button');
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const formulaId = button.getAttribute('onclick').match(/'([^']+)'/)[1];  // Извлекаем ID формулы из onclick
+                    const formulaId = button.getAttribute('onclick').match(/'([^']+)'/)[1];  // Извлекаем ID из onclick
                     toggleFormula(formulaId);
                 });
             });

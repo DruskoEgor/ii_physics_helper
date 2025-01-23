@@ -9,7 +9,14 @@
         // Функция для раскрытия формулы
         function toggleFormula(formulaId) {
             const formulaElement = document.getElementById(formulaId);
-            formulaElement.style.display = (formulaElement.style.display === 'none' || formulaElement.style.display === '') ? 'block' : 'none';
+            if (formulaElement) {
+                // Переключаем видимость описания формулы
+                if (formulaElement.style.display === 'none' || formulaElement.style.display === '') {
+                    formulaElement.style.display = 'block';
+                } else {
+                    formulaElement.style.display = 'none';
+                }
+            }
         }
     </script>
 </head>
@@ -28,15 +35,17 @@
                     {% for sub_topic, data in subtopics.items() %}
                         <div class="sub-topic">
                             <h4>{{ sub_topic }}</h4>
-                            <p>{{ data['описание'] }}</p>
+                            <p>{{ data['описание'] }}</p>  <!-- Выводим описание -->
 
                             {% if data['формулы'] %}
                                 <ul>
                                     {% for formula in data['формулы'] %}
                                         <li>
+                                            <!-- Кнопка для раскрытия формулы -->
                                             <button onclick="toggleFormula('formula-{{ loop.index }}')">
                                                 {{ formula['формула'] }}
                                             </button>
+                                            <!-- Скрытый блок с описанием формулы -->
                                             <div id="formula-{{ loop.index }}" style="display:none;">
                                                 <p>{{ formula['описание'] }}</p>
                                             </div>
@@ -44,7 +53,7 @@
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                <p>Формулы не добавлены для этого подкатегории.</p>
+                                <p>Формулы не добавлены для этой подкатегории.</p>
                             {% endif %}
                         </div>
                     {% endfor %}

@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Как ИИ может помочь подготовиться к ЕГЭ по физике</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        // Функция для раскрытия формулы
+        function toggleFormula(formulaId) {
+            const formulaElement = document.getElementById(formulaId);
+            formulaElement.style.display = (formulaElement.style.display === 'none' || formulaElement.style.display === '') ? 'block' : 'none';
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -22,11 +29,23 @@
                         <div class="sub-topic">
                             <h4>{{ sub_topic }}</h4>
                             <p>{{ data['описание'] }}</p>
-                            <ul>
-                                {% for formula in data['формулы'] %}
-                                    <li><strong>{{ formula['формула'] }}</strong>: {{ formula['описание'] }}</li>
-                                {% endfor %}
-                            </ul>
+
+                            {% if data['формулы'] %}
+                                <ul>
+                                    {% for formula in data['формулы'] %}
+                                        <li>
+                                            <button onclick="toggleFormula('formula-{{ loop.index }}')">
+                                                {{ formula['формула'] }}
+                                            </button>
+                                            <div id="formula-{{ loop.index }}" style="display:none;">
+                                                <p>{{ formula['описание'] }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>Формулы не добавлены для этого подкатегории.</p>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>

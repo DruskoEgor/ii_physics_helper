@@ -3,7 +3,7 @@ import json
 import requests
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app.py = Flask(__name__)
 
 # Прямой URL для файла на GitHub
 GITHUB_JSON_URL = 'https://raw.githubusercontent.com/username/repository/branch/data/data.json'
@@ -21,4 +21,4 @@ def index():
     return render_template('index.html', formulas=formulas)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.py.run(debug=True)

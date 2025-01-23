@@ -1,27 +1,24 @@
-from flask import Flask, render_template, jsonify
 import os
 import json
+import requests
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# Путь к файлу с формулами
-data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'data.json')
+# Прямой URL для файла на GitHub
+GITHUB_JSON_URL = 'https://raw.githubusercontent.com/username/repository/branch/data/data.json'
 
-# Загрузка данных из JSON-файла
+# Кэшируем данные при старте приложения
 def load_formulas():
-    with open(data_path, 'r', encoding='utf-8') as file:
-        return json.load(file)
+    response = requests.get(GITHUB_JSON_URL)
+    return response.json()
+
+# Загружаем данные при старте
+formulas = load_formulas()
 
 @app.route('/')
 def index():
-    formulas = load_formulas()  # Загружаем данные для страницы
     return render_template('index.html', formulas=formulas)
-
-@app.route('/api/formulas')
-def api_formulas():
-    formulas = load_formulas()  # Загружаем данные для API
-    return jsonify(formulas)
 
 if __name__ == '__main__':
     app.run(debug=True)
-

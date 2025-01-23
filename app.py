@@ -1,24 +1,26 @@
-import os
-import json
-import requests
 from flask import Flask, render_template
+import requests
 
 app = Flask(__name__)
 
-# Прямой URL для файла на GitHub
-GITHUB_JSON_URL = 'https://raw.githubusercontent.com/DruskoEgor/ii_physics_helper/main/data/data.json'
-
-# Кэшируем данные при старте приложения
+# Функция для загрузки данных из JSON
 def load_formulas():
-    response = requests.get(GITHUB_JSON_URL)
-    return response.json()
+    url = "https://raw.githubusercontent.com/DruskoEgor/ii_physics_helper/main/data/data.json"  # raw-ссылка на файл
+    response = requests.get(url)
 
-# Загружаем данные при старте
-formulas = load_formulas()
+    if response.status_code == 200:
+        try:
+            return response.json()  # Преобразуем в JSON
+        except ValueError:
+            raise ValueError("Не удалось распарсить JSON. Ответ от сервера: " + response.text)
+    else:
+        raise Exception(f"Ошибка загрузки данных: {response.status_code} - {response.text}")
 
 @app.route('/')
 def index():
-    return render_template('index.html', formulas=formulas)
+    formulas = load_formulas()  # Загружаем данные
+    return render_template('index.html', formulas=formulas)  # Передаем данные в шаблон
 
 if __name__ == '__main__':
     app.run(debug=True)
+

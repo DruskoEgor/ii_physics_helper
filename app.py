@@ -6,7 +6,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Прямой URL для файла на GitHub
-GITHUB_JSON_URL = 'https://raw.githubusercontent.com/username/repository/branch/data/data.json'
+GITHUB_JSON_URL = 'https://github.com/DruskoEgor/ii_physics_helper/blob/main/data/data.json'
 
 # Кэшируем данные при старте приложения
 def load_formulas():

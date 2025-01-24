@@ -1158,9 +1158,6 @@ def load_formulas():
 def index():
     formulas = load_formulas()  # Загружаем данные из JSON
 
-    # Декодируем данные в строку с правильной кодировкой
-    formulas = json.loads(json.dumps(formulas, ensure_ascii=False))  # Декодируем в читаемую форму
-
     print(formulas)  # Выводим данные в консоль для проверки
     return render_template('index.html', formulas=formulas)  # Передаем данные в шаблон
 

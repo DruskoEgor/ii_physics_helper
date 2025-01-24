@@ -19,6 +19,7 @@ def load_formulas():
 @app.route('/')
 def index():
     formulas = load_formulas()  # Загружаем данные из JSON
+    formulas = json.loads(json.dumps(formulas, ensure_ascii=False))
     print(formulas)
     return render_template('index.html', formulas=formulas)  # Передаем данные в шаблон
 

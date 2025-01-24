@@ -5,33 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Как ИИ может помочь подготовиться к ЕГЭ по физике</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('JavaScript подключен и работает!');  // Подтверждаем, что JS выполняется
-
-            // Функция для раскрытия формулы
-            function toggleFormula(formulaId) {
-                const formulaElement = document.getElementById(formulaId);
-                console.log('Нажата кнопка для формулы с ID:', formulaId);  // Логируем ID
-                if (formulaElement) {
-                    if (formulaElement.style.display === 'none' || formulaElement.style.display === '') {
-                        formulaElement.style.display = 'block';
-                    } else {
-                        formulaElement.style.display = 'none';
-                    }
-                }
-            }
-
-            // Привязываем события для всех кнопок
-            const buttons = document.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const formulaId = button.getAttribute('onclick').match(/'([^']+)'/)[1];  // Извлекаем ID из onclick
-                    toggleFormula(formulaId);
-                });
-            });
-        });
-    </script>
 </head>
 <body>
     <header>
@@ -78,5 +51,42 @@
     <footer>
         <p>&copy; 2025 Подготовка к ЕГЭ по физике с помощью ИИ</p>
     </footer>
+
+    <!-- Вставляем JavaScript в конце страницы -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('JavaScript подключен и работает!');  // Проверим, что скрипт работает
+
+            // Функция для раскрытия формулы
+            function toggleFormula(formulaId) {
+                const formulaElement = document.getElementById(formulaId);
+                console.log('Нажата кнопка для формулы с ID:', formulaId);  // Логируем ID
+                if (formulaElement) {
+                    if (formulaElement.style.display === 'none' || formulaElement.style.display === '') {
+                        formulaElement.style.display = 'block';
+                    } else {
+                        formulaElement.style.display = 'none';
+                    }
+                }
+            }
+
+            // Используем setInterval для того, чтобы убедиться, что кнопки загружены
+            const intervalId = setInterval(function() {
+                const buttons = document.querySelectorAll('button');
+                if (buttons.length > 0) {
+                    console.log('Кнопки найдены!');
+                    clearInterval(intervalId);  // Прекращаем проверку, если кнопки найдены
+
+                    // Привязываем события для всех кнопок
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const formulaId = button.getAttribute('onclick').match(/'([^']+)'/)[1];  // Извлекаем ID из onclick
+                            toggleFormula(formulaId);
+                        });
+                    });
+                }
+            }, 100);  // Проверяем каждые 100 мс
+        });
+    </script>
 </body>
 </html>

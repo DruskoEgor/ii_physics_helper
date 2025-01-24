@@ -16,7 +16,7 @@
         <h2>Формулы по физике</h2>
         <div id="formula-list">
             <!-- Выводим все данные JSON для проверки -->
-            <pre>{{ formulas | tojson(indent=2) }}</pre>
+            <pre>{{ formulas | tojson(indent=2) }}</pre>  <!-- Проверим, что данные передаются корректно -->
 
             {% for topic, subtopics in formulas.items() %}
                 <div class="topic">

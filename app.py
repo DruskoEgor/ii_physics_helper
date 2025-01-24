@@ -1,28 +1,37 @@
+import json
 from flask import Flask, render_template
-import requests
 
 app = Flask(__name__)
 
 # Функция для загрузки данных из JSON
 def load_formulas():
-    url = "https://raw.githubusercontent.com/DruskoEgor/ii_physics_helper/main/data/data.json"  # raw-ссылка на файл
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        try:
-            return response.json()  # Преобразуем в JSON
-        except ValueError:
-            raise ValueError("Не удалось распарсить JSON. Ответ от сервера: " + response.text)
-    else:
-        raise Exception(f"Ошибка загрузки данных: {response.status_code} - {response.text}")
+    # Пример загрузки данных (замените на вашу логику загрузки данных)
+    return {
+        "Механика": {
+            "Кинематика": {
+                "1.1.1 Механическое движение и его виды": {
+                    "описание": "Механическое движение — это изменение положения тела относительно других тел в пространстве и времени.",
+                    "формулы": []
+                },
+                "1.1.2 Относительность механического движения": {
+                    "описание": "Движение является относительным, то есть зависит от системы отсчета.",
+                    "формулы": [
+                        {"формула": "x' = x - vt", "описание": "Преобразование координат в системе отсчета, движущейся с постоянной скоростью v относительно первоначальной системы."}
+                    ]
+                }
+            }
+        }
+    }
 
 @app.route('/')
 def index():
     formulas = load_formulas()  # Загружаем данные из JSON
-    formulas = json.loads(json.dumps(formulas, ensure_ascii=False))
-    print(formulas)
+
+    # Декодируем данные в строку с правильной кодировкой
+    formulas = json.loads(json.dumps(formulas, ensure_ascii=False))  # Декодируем в читаемую форму
+
+    print(formulas)  # Выводим данные в консоль для проверки
     return render_template('index.html', formulas=formulas)  # Передаем данные в шаблон
 
 if __name__ == '__main__':
     app.run(debug=True)
-
